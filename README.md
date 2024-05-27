@@ -79,7 +79,7 @@ There are now three cases (sort of) which describe what to do next:
 
 If you've reached this point, you then have all the eight bits you need to construct the final result.
 
-#Implementation
+# Implementation
 In this design, the function of the FP_Adder entity is simply to determine whether or not the result could immediately be identified as NaN or infinity by checking the conditions laid
 out in step 1 of the previous section. If the operands passed all of these initial tests, they are sent to the Adder entity. This entity is described visually in VHDL3_schematic.png.
 Note that the “adj” in “20-bit-A(adj)” and “20-bit-B(adj)” (in the VHDL3_schematic.png) stands for “adjusted”.
