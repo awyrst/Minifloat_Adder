@@ -19,6 +19,7 @@ Even if you're aware of how to add two minifloats, I suggest reading this sectio
 The process is the following:
 
 Step 1. Validate the inputs
+
 The following summarizes six special cases of the input values for which we can immediately determine the result:
 
 1. infinity + (-1)*infinity = NaN
@@ -31,27 +32,33 @@ The following summarizes six special cases of the input values for which we can 
 Provided the inputs do not match one of the above cases, continue to the following steps.
 
 Step 2. Aligning the Radix points
+
 Align the radix points of the operands by incrementing the exponent (of the operand with the lower exponent value) until the two exponents are equal, and for every increment
 of the exponent, you must shift the bits of that same operand's mantissa to the right by one (or shift the radix point one bit to the left). Shifting the mantissa by one bit
 to the right for every increment to the exponent ensures that the value of that operand remains the same. Remember the exponent value that both operands now have - this will 
 come up later in step 7.
 
 Step 3. Concatenate some zeroes
+
 Concatenate two zeroes to the MSB position of the expanded mantissas (mantissas after having included the hidden bit) of both operands.
 
 Step 4. Two's Complement Conversion (if necessary)
+
 For each operand, if its sign bit was ‘1’ (i.e. the number was negative), then flip all the bits of its expanded mantissa, and add 1 (convert to its 2s complement representation). 
 Notice that the mantissa of the operand with a sign bit of ‘0’ is positive, and is already in its 2s complement form (with 1 bit signed extension) as a result of step 3.
 
 Step 5. Add the Mantissas
+
 Perform 2's complement addition with the 2s complement representations of the expanded mantissas of the operands obtained from step 4. The MSB of the sum obtained from this 
 operation is the sign bit of the final result.
 
 Step 6. Convert Result to Sign-Magnitude Representation (if necessary)
+
 If the sign bit of the sum in step 5 was ‘1’, then use the method described at the beginning of step 4 (2s complement conversion) to acquire the magnitude of the result. 
 If the sign bit was ‘0’ instead, keep the result as is.
 
 Step 7. Normalization (the most complicated step to explain in this format)
+
 This next step involves shifting the radix point of the result obtained in step 6 using a method similar to that which was used in step 2. If you were keeping track of the radix 
 point throughout the addition carried out in step 5, you'd recall that the radix point of the result from step 6 remains between the third and 4th bits (counting from the MSB).
 There are now three cases (sort of) which describe what to do next:
